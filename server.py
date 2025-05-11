@@ -6,7 +6,7 @@ import os
 import json
 from urllib.parse import parse_qs
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 
 HOST = '127.0.0.1'
 PORT = 8080
@@ -38,7 +38,7 @@ def render_forum_html():
 
     for message in messages:
         # Convert timestamp biar human-readable
-        timestamp = datetime.fromtimestamp(message["timestamp"]).strftime('%Y-%m-%d %H:%M:%S')
+        timestamp = datetime.fromtimestamp(message["timestamp"], tz=timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
         list_items.append(f"""
             <li class="message">
                 <div class="message-name">{message['name']}</div>
