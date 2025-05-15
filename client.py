@@ -50,3 +50,7 @@ def send_post(name, message):
             response += data
 
     print(response.decode(errors="ignore"))
+    
+#contoh mau masukin input
+#send_post("Fairuz", "hentai")
+#send_get()
