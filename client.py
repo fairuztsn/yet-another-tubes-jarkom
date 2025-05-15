@@ -21,7 +21,11 @@ def send_get():
                 break
             response += data
 
-    print(response.decode(errors="ignore"))
+    # Cetak isi HTML sebagai teks
+    html = response.decode(errors="ignore")
+    body = html.split("\r\n\r\n", 1)[-1]
+    print("\n==== Isi Forum ====\n")
+    print(body)
 
 def send_post(name, message):
     form_data = urllib.parse.urlencode({
@@ -49,8 +53,21 @@ def send_post(name, message):
                 break
             response += data
 
-    print(response.decode(errors="ignore"))
-    
-#contoh mau masukin input
-#send_post("Fairuz", "hentai")
-#send_get()
+    print("\nPesan berhasil dikirim!")
+
+# Menu tambahan buat cmd
+if __name__ == "__main__":
+    print("Client Forum Chat")
+    print("=================\n")
+    print("1. Kirim pesan")
+    print("2. Lihat isi forum")
+    choice = input("Pilih menu (1/2): ")
+
+    if choice == "1":
+        name = input("Nama: ")
+        message = input("Pesan: ")
+        send_post(name, message)
+    elif choice == "2":
+        send_get()
+    else:
+        print("Pilihan tidak valid.")
