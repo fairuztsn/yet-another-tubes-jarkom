@@ -50,7 +50,3 @@ def send_post(name, message):
             response += data
 
     print(response.decode(errors="ignore"))
-
-# Contoh penggunaan
-send_post("ClientUser", "Hello dari client.py!")
-send_get()
