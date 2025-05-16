@@ -75,10 +75,8 @@ if __name__ == "__main__":
     choice = input("Pilih menu (1/2): ")
 
     if choice == "1":
-        name = input("Nama: ")
-        message = input("Pesan: ")
-        send_post(name, message)
+        threaded_post()
     elif choice == "2":
-        send_get()
+        threaded_get() 
     else:
         print("Pilihan tidak valid.")
