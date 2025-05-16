@@ -1,5 +1,6 @@
 import socket
 import urllib.parse
+import threading
 
 HOST = '127.0.0.1'
 PORT = 8080
@@ -54,6 +55,16 @@ def send_post(name, message):
             response += data
 
     print("\nPesan berhasil dikirim!")
+
+def threaded_post():
+    name = input("Nama: ")
+    message = input("Pesan: ")
+    thread = threading.Thread(target=send_post, args=(name, message))
+    thread.start()
+
+def threaded_get():
+    thread = threading.Thread(target=send_get)
+    thread.start()
 
 # Menu tambahan buat cmd
 if __name__ == "__main__":
