@@ -77,6 +77,17 @@ def handle_client(connection, address):
                 content
             )
             connection.sendall(response.encode())
+        elif method == "GET" and path == "/posts.json":
+            with open('./posts.json', 'r') as f:
+                content = f.read()
+            
+            response = (
+                'HTTP/1.1 200 OK\r\n'
+                'Content-Type: application/json\r\n'
+                f'Content-Length: {len(content)}\r\n'
+                'Connection: close\r\n\r\n' + content
+            )
+            connection.sendall(response.encode())
         
         elif method == "POST" and path == "/post":
             if "application/json" in content_type:

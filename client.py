@@ -7,9 +7,9 @@ import sys
 HOST = '127.0.0.1'
 PORT = 8080
 
-def send_get():
+def send_get(f):
     request = (
-        "GET /forum.html HTTP/1.1\r\n"
+        f"GET /{f} HTTP/1.1\r\n"
         f"Host: {HOST}:{PORT}\r\n"
         "Connection: close\r\n\r\n"
     )
@@ -27,7 +27,7 @@ def send_get():
     # Cetak isi HTML sebagai teks
     html = response.decode(errors="ignore")
     body = html.split("\r\n\r\n", 1)[-1]
-    print("\n==== Isi Forum ====\n")
+    
     print(body)
 
 def send_post(name, message):
@@ -64,8 +64,8 @@ def threaded_post():
     thread = threading.Thread(target=send_post, args=(name, message))
     thread.start()
 
-def threaded_get():
-    thread = threading.Thread(target=send_get)
+def threaded_get(f):
+    thread = threading.Thread(target=send_get, args=(f, ))
     thread.start()
     
 def default_mode():
@@ -78,7 +78,8 @@ def default_mode():
     if choice == "1":
         threaded_post()
     elif choice == "2":
-        threaded_get() 
+        f = input("Nama file? ")
+        threaded_get(f) 
     else:
         print("Pilihan tidak valid.")
 
@@ -95,6 +96,6 @@ if __name__ == "__main__":
         default_mode() # Yang dikerjain sudes beni kemarin
     elif args.server_host and args.server_port and args.file_name:
         print(f"Membuat koneksi ke {args.server_host}:{args.server_port}, meminta {args.file_name}")
-        threaded_get()
+        threaded_get(args.file_name)
     else:
         print("Penggunaan invalid. Coba --help buat liat instruksi.")
