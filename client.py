@@ -1,6 +1,8 @@
 import socket
 import urllib.parse
 import threading
+import argparse
+import sys
 
 HOST = '127.0.0.1'
 PORT = 8080
@@ -65,9 +67,8 @@ def threaded_post():
 def threaded_get():
     thread = threading.Thread(target=send_get)
     thread.start()
-
-# Menu tambahan buat cmd
-if __name__ == "__main__":
+    
+def default_mode():
     print("Client Forum Chat")
     print("=================\n")
     print("1. Kirim pesan")
@@ -80,3 +81,20 @@ if __name__ == "__main__":
         threaded_get() 
     else:
         print("Pilihan tidak valid.")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Client Forum Chat")
+
+    parser.add_argument("server_host", nargs="?", help="Server host to untuk connect")
+    parser.add_argument("server_port", nargs="?", type=int, help="Port number server")
+    parser.add_argument("file_name", nargs="?", help="File yang mau diminta")
+
+    args = parser.parse_args()
+
+    if len(sys.argv) == 1:
+        default_mode() # Yang dikerjain sudes beni kemarin
+    elif args.server_host and args.server_port and args.file_name:
+        print(f"Membuat koneksi ke {args.server_host}:{args.server_port}, meminta {args.file_name}")
+        threaded_get()
+    else:
+        print("Penggunaan invalid. Coba --help buat liat instruksi.")
