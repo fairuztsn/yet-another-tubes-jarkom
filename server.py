@@ -78,8 +78,7 @@ def handle_client(connection, address):
             )
             connection.sendall(response.encode())
         elif method == "GET" and path == "/posts.json":
-            with open('./posts.json', 'r') as f:
-                content = f.read()
+            content = json.dumps(load_messages())
             
             response = (
                 'HTTP/1.1 200 OK\r\n'
